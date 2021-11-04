@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+    <springProperty scope="context" name="springAppName" source="spring.application.name"/>
+
+    <appender name="Console"
+      class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                %black(%d{ISO8601}) %highlight(%-5level) [%green(${springAppName})] [%green(%thread)] %cyan(%C{1.}): %msg%n%throwable
+            </Pattern>
+        </layout>
+    </appender>
+
+    <!-- LOG everything at INFO level -->
+    <root level="INFO">
+        <appender-ref ref="Console" />
+    </root>
+
+    <!-- Except for arq libs, in that case use ERROR level -->
+    <logger name="org.apache.commons.httpclient.HttpMethodBase" level="ERROR">
+        <appender-ref ref="Console"/>
+    </logger>
+
+</configuration>
